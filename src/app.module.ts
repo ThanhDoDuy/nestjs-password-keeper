@@ -1,4 +1,4 @@
-import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -6,6 +6,9 @@ import mongodb from './configs/mongose.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PasswordsModule } from './modules/passwords/passwords.module';
 import { LoggingMiddleware } from './logging/logging.middleware';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CompaniesModule } from './modules/companies/companies.module';
 
 @Module({
   imports: [
@@ -29,6 +32,9 @@ import { LoggingMiddleware } from './logging/logging.middleware';
       inject: [ConfigService],
     }),
     PasswordsModule,
+    UsersModule,
+    AuthModule,
+    CompaniesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
