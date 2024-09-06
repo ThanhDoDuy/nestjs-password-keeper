@@ -1,26 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { DEFAULT_SCHEMA } from '../constant/default.schema';
 
-@Schema({
-  toJSON: {
-    virtuals: true,
-    versionKey: false,  // Removes __v
-    transform: (doc, ret) => {
-      ret.id = ret._id;  // Map _id to id
-      delete ret._id;    // Remove _id
-      return ret;
-    },
-  },
-  toObject: {
-    virtuals: true,
-    versionKey: false,  // Removes __v
-    transform: (doc, ret) => {
-      ret.id = ret._id;  // Map _id to id
-      delete ret._id;    // Remove _id
-      return ret;
-    },
-  },
-})
+@Schema(DEFAULT_SCHEMA)
 export class Password extends Document {
   @Prop({
     required: true,

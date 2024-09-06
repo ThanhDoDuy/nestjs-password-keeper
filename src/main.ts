@@ -3,8 +3,9 @@ import { AppModule } from './app.module';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston'; // Correct import for winston
 import * as winstonDailyRotateFile from 'winston-daily-rotate-file';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
+import { TransformInterceptor } from './interceptors/transform.interceptor';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule, {
@@ -32,6 +33,7 @@ async function bootstrap() {
   // });
   const app = await NestFactory.create(AppModule);
   const reflector = app.get(Reflector);
+  app.useGlobalInterceptors(new TransformInterceptor(reflector))
   app.useGlobalGuards(new JwtAuthGuard(reflector));
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
@@ -47,6 +49,12 @@ async function bootstrap() {
       "optionsSuccessStatus": 204
     }
   );
+  app.setGlobalPrefix('api');
+  // enable Versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: ['1', '2']
+  });
   await app.listen(process.env.PORT);
 }
 bootstrap();

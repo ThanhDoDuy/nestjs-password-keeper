@@ -52,7 +52,7 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto) {
     try {
-      return this.UserModel.updateOne({_id: updateUserDto.id}, updateUserDto);
+      return this.UserModel.updateOne({_id: updateUserDto._id}, updateUserDto);
     } catch (error) {
       return buildFailItemResponse(ErrorCode.BAD_REQUEST, MSG_ERR_WHEN_UPDATE);
     };
@@ -61,7 +61,7 @@ export class UsersService {
   async remove(deleteUserDto: DeleteUserDto) {
     try {
       return this.UserModel.updateOne({
-        _id: deleteUserDto.id,
+        _id: deleteUserDto._id,
       }, { isDeleted: true, deleteddAt: new Date()}
     );
     } catch (error) {

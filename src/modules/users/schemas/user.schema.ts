@@ -1,29 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { DEFAULT_SCHEMA } from 'src/common/constant/default.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema({
-  toJSON: {
-    virtuals: true,
-    versionKey: false,  // Removes __v
-    transform: (doc, ret) => {
-      ret.id = ret._id;  // Map _id to id
-      delete ret._id;    // Remove _id
-      return ret;
-    },
-  },
-  toObject: {
-    virtuals: true,
-    versionKey: false,  // Removes __v
-    transform: (doc, ret) => {
-      ret.id = ret._id;  // Map _id to id
-      delete ret._id;    // Remove _id
-      return ret;
-    },
-  },
-  timestamps: true,
-})
+@Schema(DEFAULT_SCHEMA)
 export class User {
   @Prop({ required: true })
   email: string;
@@ -53,7 +34,7 @@ export class User {
   isDeleted: boolean;
 
   @Prop({ default: null })
-  deleteddAt: Date;
+  deletedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
