@@ -6,6 +6,7 @@ import * as winstonDailyRotateFile from 'winston-daily-rotate-file';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule, {
@@ -46,7 +47,8 @@ async function bootstrap() {
       "origin": "*",
       "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
       "preflightContinue": false,
-      "optionsSuccessStatus": 204
+      "optionsSuccessStatus": 204,
+      credentials: true
     }
   );
   app.setGlobalPrefix('api');
@@ -55,6 +57,8 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: ['1', '2']
   });
+  // config cookies
+  app.use(cookieParser());
   await app.listen(process.env.PORT);
 }
 bootstrap();

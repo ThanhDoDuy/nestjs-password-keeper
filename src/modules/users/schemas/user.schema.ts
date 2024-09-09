@@ -24,6 +24,12 @@ export class User {
   @Prop({ default: false })
   address: string;
 
+  @Prop({ default: 'USER' })
+  role: string;
+
+  @Prop()
+  refresh_token: string;
+
   @Prop({ default: Date.now })
   createdAt: Date;
 

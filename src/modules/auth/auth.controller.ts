@@ -1,7 +1,11 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Public } from 'src/decorators/customize.decorator';
+import { Public, ResponseMessage, User } from 'src/decorators/customize.decorator';
 import { LocalAuthGuard } from './local-auth.guard';
+import { RegisterUserDto } from '../users/dto/create-user.dto';
+import { Request, Response } from 'express';
+import { REFRESH_TOKEN } from 'src/common/constant/default.schema';
+import { IUser } from '../users/user.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -25,13 +29,42 @@ export class AuthController {
    */
   @Public()
   @UseGuards(LocalAuthGuard)
+  @ResponseMessage('User login')
   @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Req() req, @Res({ passthrough: true }) response: Response) {
+    return this.authService.login(req.user, response);
   }
 
-  @Get('profile')
-  getProfile(@Request() req) {
+  @Public()
+  @ResponseMessage('User Register')
+  @Post('register')
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    return this.authService.register(registerUserDto);
+  }
+
+  @Get('account')
+  @ResponseMessage('User get Info')
+  getProfile(@Req() req) {
     return req.user;
+  }
+
+  @Get('logout')
+  @ResponseMessage('User log out')
+  logout(
+    @Res({ passthrough: true }) response: Response,
+    @User() user: IUser
+  ) {
+    return this.authService.logout(user._id, response);;
+  }
+
+  @Public()
+  @Get('refresh')
+  @ResponseMessage('User get Refresh Token')
+  handleRefreshToken(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response) {
+    const refresh_token = request.cookies?.[REFRESH_TOKEN];
+    if (!refresh_token) throw new BadRequestException('Some error happened, Please login again.');
+    return this.authService.processNewPairToken(refresh_token, response);
   }
 }

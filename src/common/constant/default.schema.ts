@@ -19,3 +19,5 @@ export const DEFAULT_SCHEMA = {
   },
   timestamps: true,
 }
+
+export const REFRESH_TOKEN = 'refresh_token';

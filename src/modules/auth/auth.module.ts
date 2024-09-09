@@ -16,10 +16,10 @@ import { AuthController } from './auth.controller';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_ACCESS_TOKEN'),
+        secret: configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
         // adding "esModuleInterop": true to compilerOptions of tsconfig.json works
         signOptions: {
-          expiresIn: ms(configService.get<string>('JWT_ACCESS_EXPIRED'))
+          expiresIn: ms(configService.get<string>('JWT_ACCESS_EXPIRED')) / 1000
         }
       }),
       inject: [ConfigService],
