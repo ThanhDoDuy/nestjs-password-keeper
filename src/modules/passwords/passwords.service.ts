@@ -3,11 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreatePasswordDto, UpdatePasswordDto } from '../../common/dto/create-password.dto';
 import { Password } from '../../common/schemas/password.schema';
-import { buildFailItemResponse } from 'src/utils/response';
-import { ErrorCode } from 'src/utils/error-code';
-import { MSG_ERR_NOT_FOUND, MSG_ERR_WHEN_CREATE, MSG_ERR_WHEN_DELETE, MSG_ERR_WHEN_UPDATE } from '../../utils/message.constant';
 import { FailItemResponse } from 'src/common/interfaces/fail-item-response.interface';
 import { IUser } from '../users/user.interface';
+import { Role } from 'src/common/constant/role.enum';
 
 @Injectable()
 export class PasswordsService {
@@ -16,7 +14,7 @@ export class PasswordsService {
   async create(
     createPasswordDto: CreatePasswordDto,
     user: IUser
-  ): Promise<Password | FailItemResponse> {
+  ): Promise<Password> {
     const newPassword = new this.passwordModel({
       ...createPasswordDto,
       owner: user._id,
@@ -99,6 +97,21 @@ export class PasswordsService {
         isDeleted: true,
         deletedBy: user._id,
         updatedAt: new Date()
+      }
+    ).exec();
+    if (!result) {
+      throw new NotFoundException(`Password with ID ${deletePasswordDto._id} not found.`);
+    }
+    return { id: deletePasswordDto._id }
+  }
+
+  async delete(
+    deletePasswordDto: UpdatePasswordDto,
+    user: IUser
+  ): Promise<{ id: string }> {
+    const result = await this.passwordModel.findOneAndDelete(
+      {
+        _id: deletePasswordDto._id,
       }
     ).exec();
     if (!result) {

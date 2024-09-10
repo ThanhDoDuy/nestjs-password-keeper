@@ -8,7 +8,6 @@ export type PasswordDocument = HydratedDocument<Password>;
 export class Password {
   @Prop({
     required: true,
-    unique: true,
   })
   AppName: string;
 

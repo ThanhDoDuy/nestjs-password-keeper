@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto, UpdateUserDto } from './dto/update-user.dto';
 import { PermissionsGuard } from 'src/guards/permissions.guard';
-import { PostPermissions, UserPermissions } from 'src/common/constant/permissions.enum';
+import { UserPermissions } from 'src/common/constant/permissions.enum';
 import { SetPermissions } from 'src/decorators/permissions.decorator';
 
 @Controller('users')
@@ -18,14 +18,11 @@ export class UsersController {
   }
 
   @Get()
-  @SetPermissions(UserPermissions.READ_ALL_USER) 
-  @SetPermissions(PostPermissions.CREATE_POST) 
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @SetPermissions(UserPermissions.READ_USER) 
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }

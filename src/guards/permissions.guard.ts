@@ -22,14 +22,12 @@ export class PermissionsGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-
     if (!user || !user.permissions) {
       return false;
     }
     // Check if the user has all the required permissions
     const hasPermission = requiredPermissions.every(
       permission => user.permissions.includes(permission));
-
     if (!hasPermission) {
       // Throw a custom ForbiddenException with a custom message
       throw new ForbiddenException(

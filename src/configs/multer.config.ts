@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { MulterModuleOptions, MulterOptionsFactory } from "@nestjs/platform-express";
 import fs from 'fs';
 import { diskStorage } from "multer";
@@ -13,7 +13,7 @@ export class MulterConfigService implements MulterOptionsFactory {
   ensureExists(targetDirectory: string) {
     fs.mkdir(targetDirectory, { recursive: true }, (error) => {
       if (!error) {
-        console.log('Directory successfully created, or it already exists.');
+        Logger.error('Directory successfully created, or it already exists.');
         return;
       }
       switch (error.code) {
