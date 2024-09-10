@@ -23,5 +23,5 @@ export class CreatePasswordDto {
 export class UpdatePasswordDto extends PartialType(CreatePasswordDto) {
   @IsNotEmpty()
   @IsString()
-  id: string;
+  _id: string;
 }

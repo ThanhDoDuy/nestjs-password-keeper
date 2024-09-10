@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Put, Query } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { RESPONSE_MESSAGE, ResponseMessage, User } from 'src/decorators/customize.decorator';
+import { ResponseMessage, User } from 'src/decorators/customize.decorator';
 import { IUser } from '../users/user.interface';
 import { DeleteUserDto } from '../users/dto/update-user.dto';
 import { query } from 'express';

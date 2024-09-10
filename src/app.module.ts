@@ -9,6 +9,9 @@ import { LoggingMiddleware } from './logging/logging.middleware';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CompaniesModule } from './modules/companies/companies.module';
+import { FilesModule } from './modules/files/files.module';
+import { RolesModule } from './modules/roles/roles.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { CompaniesModule } from './modules/companies/companies.module';
     UsersModule,
     AuthModule,
     CompaniesModule,
+    FilesModule,
+    RolesModule,
+    PermissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

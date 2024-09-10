@@ -7,8 +7,8 @@ import mongoose, { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { buildFailItemResponse } from 'src/utils/response';
 import { ErrorCode } from 'src/utils/error-code';
-import { MSG_ERR_NOT_FOUND, MSG_ERR_WHEN_DELETE, MSG_ERR_WHEN_UPDATE } from 'src/utils/message.constant';
-import { Company } from '../companies/entities/company.entity';
+import { MSG_ERR_WHEN_DELETE } from 'src/utils/message.constant';
+import { Company } from '../companies/schemas/company.entity';
 
 @Injectable()
 export class UsersService {
