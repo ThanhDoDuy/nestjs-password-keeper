@@ -32,12 +32,6 @@ export class CreateUserDto {
     @IsOptional()
     @IsString()
     address: string;
-
-    @IsNotEmptyObject()
-    @IsObject()
-    @ValidateNested()
-    @Type(() => Company)
-    company: Company;
 }
 
 export class RegisterUserDto {
@@ -63,10 +57,4 @@ export class RegisterUserDto {
 
     @IsString()
     address: string;
-
-    @IsNotEmptyObject()
-    @IsObject()
-    @ValidateNested()
-    @Type(() => Company)
-    company: Company;
 }

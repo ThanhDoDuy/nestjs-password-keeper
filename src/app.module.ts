@@ -12,6 +12,7 @@ import { CompaniesModule } from './modules/companies/companies.module';
 import { FilesModule } from './modules/files/files.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { PermissionsModule } from './modules/permissions/permissions.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { PermissionsModule } from './modules/permissions/permissions.module';
     FilesModule,
     RolesModule,
     PermissionsModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

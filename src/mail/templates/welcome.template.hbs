@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Our Service</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f7;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      color: #51545E;
+    }
+    .email-wrapper {
+      width: 100%;
+      background-color: #f4f4f7;
+      padding: 20px;
+    }
+    .email-content {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .email-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .email-header img {
+      max-width: 120px;
+    }
+    .email-body {
+      padding: 20px 0;
+    }
+    .email-body h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333333;
+      margin-bottom: 20px;
+    }
+    .email-body p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #51545E;
+      margin-bottom: 20px;
+    }
+    .email-footer {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid #ddd;
+      font-size: 12px;
+      color: #888888;
+    }
+    .button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-content">
+      <div class="email-header">
+        <img src="https://your-company-logo.com/logo.png" alt="Company Logo" />
+      </div>
+      <div class="email-body">
+        <h1>Welcome, {{name}}!</h1>
+        <p>
+          Thank you for joining <strong>Our Service</strong>. We are excited to have you on board! To get started, please explore our services and familiarize yourself with everything we have to offer.
+        </p>
+        <p>
+          Feel free to reach out to our support team if you have any questions. We're here to help you make the most out of your experience with us.
+        </p>
+        <p>
+          Click the button below to start exploring your account.
+        </p>
+        <p style="text-align: center;">
+          <a href="https://your-app-link.com/dashboard" class="button">Go to Dashboard</a>
+        </p>
+      </div>
+      <div class="email-footer">
+        <p>
+          If you have any questions, reply to this email or contact our support team at <a href="mailto:support@itFanClub.com">support@your-company.com</a>.
+        </p>
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

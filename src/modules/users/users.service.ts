@@ -9,6 +9,7 @@ import { buildFailItemResponse } from 'src/utils/response';
 import { ErrorCode } from 'src/utils/error-code';
 import { MSG_ERR_WHEN_DELETE } from 'src/utils/message.constant';
 import { Company } from '../companies/schemas/company.entity';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,8 @@ export class UsersService {
     @InjectModel(User.name)
     private UserModel: Model<User>,
     @InjectModel(Company.name)
-    private CompanyModel: Model<Company>
+    private CompanyModel: Model<Company>,
+    private readonly mailService: MailService
   ) { }
 
   async hashPassword(password: string): Promise<string> {
@@ -28,20 +30,13 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto | RegisterUserDto) {
     const hashedPassword = await this.hashPassword(createUserDto.password);
-    // check email
-    const existedEmail = await this.UserModel.findOne({
-      email: createUserDto.email,
-    });
-    if (existedEmail) {
-      throw new BadRequestException("Email is existed")
-    };
-    // Check if the company already exists (assuming 'company' is a field in the DTO)
-    const existingCompany = await this.CompanyModel.findOne({
-      _id: createUserDto.company._id,
-    });
-    if (!existingCompany) {
-      throw new BadRequestException("Company is not existed")
-    };
+    // // check email
+    // const existedEmail = await this.UserModel.findOne({
+    //   email: createUserDto.email,
+    // });
+    // if (existedEmail) {
+    //   throw new BadRequestException("Email is existed")
+    // };
     const createUser = new this.UserModel({
       ...createUserDto,
       password: hashedPassword,
@@ -49,6 +44,8 @@ export class UsersService {
     const savedUser = await createUser.save();
     // Convert to plain JavaScript object
     const userObject = savedUser.toObject();
+    // send email
+    this.mailService.sendUserWelcome(userObject.email, userObject.name);
     delete userObject.password;
     return userObject;
   }
