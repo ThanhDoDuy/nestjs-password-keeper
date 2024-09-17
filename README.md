@@ -56,6 +56,13 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+# build docker
+$ docker build -t thanhdd/backend-nest .
+# run docker
+$ docker build -t thanhdd/backend-nest .
+$ docker run -d --name nestjs-password-keeper-container -p 5000:5000 --env-file .env.development thanhdd/backend-nest
+
 ```
 
 ## Support
