@@ -13,6 +13,9 @@ import { FilesModule } from './modules/files/files.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { PermissionsModule } from './modules/permissions/permissions.module';
 import { MailModule } from './mail/mail.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -35,17 +38,26 @@ import { MailModule } from './mail/mail.module';
       },
       inject: [ConfigService],
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 5,
+    }]),
     PasswordsModule,
     UsersModule,
     AuthModule,
     CompaniesModule,
-    FilesModule,
+    // FilesModule,
     RolesModule,
     PermissionsModule,
     MailModule,
+    HealthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

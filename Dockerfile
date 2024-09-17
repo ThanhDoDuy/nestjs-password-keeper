@@ -1,38 +1,26 @@
-# Stage 1: Build the app
-FROM node:18 AS build
+# Use an official Node.js runtime as the base image
+FROM node:18-alpine
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install application dependencies
+RUN npm cache clean --force && node --max-old-space-size=4096 $(which npm) install --verbose
 
-# Copy the rest of the application code
+# Copy the rest of the application code to the container
 COPY . .
 
-# Copy the .env file to the working directory
-COPY .env.development .env.development
+# Copy the .env.development file to the working directory
+COPY .env.development .env
 
-# Build the application
+# Build the NestJS application
 RUN npm run build
 
-# Stage 2: Run the app
-FROM node:18
+# Expose the port on which the app will run
+EXPOSE 5000
 
-# Set the working directory in the second stage
-WORKDIR /app
-
-# Copy the build output and node_modules from the build stage
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/package*.json ./
-COPY --from=build /app/.env .env
-
-# Expose the application port (change 3000 to your app's port if different)
-EXPOSE 4000
-
-# Run the application
-CMD ["node", "dist/main"]
+# Define the command to run the app
+CMD ["npm", "run", "start:prod"]
