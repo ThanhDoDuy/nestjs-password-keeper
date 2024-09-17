@@ -99,5 +99,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "overrides": {
+    "@nestjs-modules/mailer": {
+      "mjml": "^5.0.0-alpha.4"
+    }
   }
 }
