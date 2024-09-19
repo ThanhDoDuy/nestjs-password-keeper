@@ -21,19 +21,19 @@ export class RolesService {
   }
 
   async findByName(name: string): Promise<Role | null> {
-    return this.roleModel.findOne({ name }).exec();
+    return this.roleModel.findOne({ name }).lean().exec();
   }
 
   async findAll(): Promise<Role[]> {
-    return this.roleModel.find().exec();
+    return this.roleModel.find().lean().exec();
   }
 
   async update(id: string, updateData: any): Promise<Role | null> {
-    return this.roleModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
+    return this.roleModel.findByIdAndUpdate(id, updateData, { new: true }).lean().exec();
   }
 
   async delete(id: string): Promise<any> {
-    return this.roleModel.findByIdAndDelete(id).exec();
+    return this.roleModel.findByIdAndDelete(id).lean().exec();
   }
 
   async findPermissionWithRoleName(name: string): Promise<string[] | null> {
@@ -41,7 +41,7 @@ export class RolesService {
     const role = await this.roleModel
       .findOne({ name})
       .populate('permissions')  // Populate full Permission objects
-      .exec();
+      .lean().exec();
   
     if (!role || !role.permissions) {
       return null;

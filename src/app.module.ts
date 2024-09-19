@@ -9,13 +9,13 @@ import { LoggingMiddleware } from './logging/logging.middleware';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CompaniesModule } from './modules/companies/companies.module';
-import { FilesModule } from './modules/files/files.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { PermissionsModule } from './modules/permissions/permissions.module';
 import { MailModule } from './mail/mail.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { HealthModule } from './modules/health/health.module';
+import { S3Module } from './modules/s3/s3.module';
 
 @Module({
   imports: [
@@ -46,11 +46,11 @@ import { HealthModule } from './modules/health/health.module';
     UsersModule,
     AuthModule,
     CompaniesModule,
-    // FilesModule,
     RolesModule,
     PermissionsModule,
     MailModule,
     HealthModule,
+    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService, {

@@ -40,7 +40,7 @@ export class PasswordsService {
     const password = await this.passwordModel.findOne({
       _id: id,
       owner: user._id
-    }).exec();
+    }).lean().lean().exec();
     if (!password) {
       throw new NotFoundException(`Password with ID ${id} not found.`);
     }
@@ -56,7 +56,7 @@ export class PasswordsService {
       _id: updatePasswordDto._id,
       owner: user._id,
       isDeleted: false
-    }).exec();
+    }).lean().lean().exec();
     if (!password) {
       throw new NotFoundException(`Password with ID ${updatePasswordDto._id} not found.`);
     }
@@ -69,7 +69,7 @@ export class PasswordsService {
         _id: updatePasswordDto._id,
         owner: user._id
       }, updatePasswordDto, { new: true })
-      .exec();
+      .lean().exec();
     if (!updatedPassword) {
       throw new NotFoundException(`Password with ID ${updatePasswordDto._id} is deleted.`);
     }
@@ -85,7 +85,7 @@ export class PasswordsService {
       _id: deletePasswordDto._id,
       owner: user._id,
       isDeleted: false
-    }).exec();
+    }).lean().exec();
     if (!password) {
       throw new NotFoundException(`Password with ID ${deletePasswordDto._id} is deleted.`);
     }
@@ -98,7 +98,7 @@ export class PasswordsService {
         deletedBy: user._id,
         updatedAt: new Date()
       }
-    ).exec();
+    ).lean().exec();
     if (!result) {
       throw new NotFoundException(`Password with ID ${deletePasswordDto._id} not found.`);
     }
@@ -113,7 +113,7 @@ export class PasswordsService {
       {
         _id: deletePasswordDto._id,
       }
-    ).exec();
+    ).lean().exec();
     if (!result) {
       throw new NotFoundException(`Password with ID ${deletePasswordDto._id} not found.`);
     }

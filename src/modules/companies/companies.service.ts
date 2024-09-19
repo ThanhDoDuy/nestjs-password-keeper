@@ -48,7 +48,8 @@ export class CompaniesService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(population)
-      .exec();
+      .lean()
+      .lean().exec();
 
     return {
       meta: {
@@ -85,7 +86,8 @@ export class CompaniesService {
           email: user.email
         }
       }, { new: true })
-      .exec();
+      .lean()
+      .lean().exec();
     if (!updatedCompany) {
       throw new NotFoundException(`Password with ID ${id} not found.`);
     }
@@ -103,7 +105,8 @@ export class CompaniesService {
           email: user.email
         }
       }, { new: true })
-      .exec();
+      .lean()
+      .lean().exec();
     if (!updatedCompany) {
       throw new NotFoundException(`Password with ID ${deletePasswordDto._id} not found.`);
     }

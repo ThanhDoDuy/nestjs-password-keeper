@@ -20,18 +20,18 @@ export class PermissionsService {
   }
 
   async findByName(name: string): Promise<Permission | null> {
-    return this.permissionModel.findOne({ name }).exec();
+    return this.permissionModel.findOne({ name }).lean().exec();
   }
 
   async findAll(): Promise<Permission[]> {
-    return this.permissionModel.find().exec();
+    return this.permissionModel.find().lean().exec();
   }
 
   async update(id: string, updateData: any): Promise<Permission | null> {
-    return this.permissionModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
+    return this.permissionModel.findByIdAndUpdate(id, updateData, { new: true }).lean().exec();
   }
 
   async delete(id: string): Promise<any> {
-    return this.permissionModel.findByIdAndDelete(id).exec();
+    return this.permissionModel.findByIdAndDelete(id).lean().exec();
   }
 }
