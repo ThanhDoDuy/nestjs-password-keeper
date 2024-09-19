@@ -27,7 +27,10 @@ export class FileController {
     if (!files || files.length === 0) {
       throw new HttpException('No files uploaded', HttpStatus.BAD_REQUEST);
     }
-
+    if ( files.length >= 10) {
+      throw new HttpException(
+        'Too much files, limitations is 10 per request', HttpStatus.BAD_REQUEST);
+    }
     try {
       const result = await this.s3Service.uploadMultipleFiles(files, user);
       return result;
